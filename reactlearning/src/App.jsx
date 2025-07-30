@@ -1,9 +1,17 @@
 import './App.css'
-import { UseStateHooks } from './classes/UseStateHooks'
+import { UseStateHooks,UseEffectHooks } from './classes/UseStateHooks'
+import { Routes,BrowserRouter,Route } from "react-router"
+import Home from './home'
 function App() {
   return (
     <>
-<UseStateHooks/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/usestate" element={<UseStateHooks />} />
+          <Route path="/useeffect" element={<UseEffectHooks />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
