@@ -1,15 +1,17 @@
 import './App.css'
-import { UseStateHooks,UseEffectHooks } from './classes/UseStateHooks'
+import Login from './auth/login'
+import Home from './page/home'
 import { Routes,BrowserRouter,Route } from "react-router"
-import Home from './home'
+import ProductUser from './protectuser'
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/usestate" element={<UseStateHooks />} />
-          <Route path="/useeffect" element={<UseEffectHooks />} />
+          <Route path="/login" element={<Login/>} />
+          
+          <Route path="/home" element={<ProductUser><Home/> </ProductUser>} />
+         
         </Routes>
       </BrowserRouter>
     </>
