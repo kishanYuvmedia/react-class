@@ -1,5 +1,5 @@
 import { useEffect,useState } from "react";
-
+import { Navigate } from "react-router";
 const Home=()=>{
     const [data,setData] = useState({username: '', password: ''});
     useEffect(()=>{
@@ -9,6 +9,7 @@ const Home=()=>{
     })
     const HandlerLogout=()=>{
         localStorage.removeItem('auth');
+        Navigate("/login", { replace: true });
     }
     return(<>
     <h1>Home</h1>
