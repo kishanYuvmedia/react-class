@@ -7,7 +7,7 @@ const Login=()=>{
     const HandlerSubmit=(e)=>{
         e.preventDefault();
         localStorage.setItem('auth', JSON.stringify({username,password}));
-        navigate('/home');
+        navigate('./home',{state:{username,password}});
     }
     return(<>
         <div>
