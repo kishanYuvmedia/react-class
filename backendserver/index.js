@@ -23,8 +23,7 @@ app.get("/", (req, res) => {
 app.post("/user", async (req,res)=>{
     try{
         const result = await db.collection("users").insertOne(req.body);
-        console.log(result)
-         res.json({ message: "User added", id: result.insertedId });
+        res.json({ message: "User added", id: result });
     }catch(error){
          res.status(500).json({ error: error.message });
     }
