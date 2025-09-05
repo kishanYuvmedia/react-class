@@ -125,3 +125,79 @@ Delete user	DELETE FROM users WHERE name='Vikas';	db.users.deleteOne({name:"Vika
 👉 By end of Class 2, students will be able to create databases, insert, query, update, and delete data in MongoDB.
 
 Would you like me to prepare Class 3 (Advanced Queries, Indexing, Relations in MongoDB) as well?
+
+
+
+Got it 👍 You want to **create and connect MongoDB with Node.js**.
+Here’s a simple step-by-step guide:
+
+---
+
+### 1. Install Dependencies
+
+First, initialize your Node.js project and install MongoDB driver:
+
+```bash
+mkdir myapp && cd myapp
+npm init -y
+npm install mongodb
+```
+
+---
+
+### 2. Basic MongoDB Connection with Node.js
+
+Create a file `index.js`:
+
+```js
+// Import MongoDB driver
+const { MongoClient } = require("mongodb");
+
+// Connection URL (local MongoDB, default port)
+const url = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(url);
+
+// Database name
+const dbName = "mydatabase";
+
+async function main() {
+  try {
+    // Connect the client
+    await client.connect();
+    console.log("✅ Connected to MongoDB");
+
+    const db = client.db(dbName);
+    const collection = db.collection("users");
+
+    // Insert one document
+    const result = await collection.insertOne({ name: "Kishan", age: 28 });
+    console.log("Document inserted with _id:", result.insertedId);
+
+    // Find documents
+    const docs = await collection.find({}).toArray();
+    console.log("All documents:", docs);
+
+  } catch (err) {
+    console.error(err);
+  } finally {
+    // Close the connection
+    await client.close();
+  }
+}
+
+main();
+```
+
+---
+
+### 3. Run the App
+
+```bash
+node index.js
+```
+
+✅ You should see connection success, inserted document, and fetched records.
+
+---
+
+👉 Question for you: Do you want me to also show **Mongoose** (an ODM for MongoDB, often easier than native driver), or keep it with pure MongoDB driver?

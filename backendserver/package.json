@@ -1,0 +1,16 @@
+{
+  "name": "backendserver",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "kishan gopal",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongodb": "^6.19.0"
+  }
+}
