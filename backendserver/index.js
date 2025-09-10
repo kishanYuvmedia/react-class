@@ -17,8 +17,11 @@ async function connectDB(){
 }
 connectDB()
 // Simple API Routes
-app.get("/", (req, res) => {
-  res.send("Hello from Express + MongoDB 🚀");
+app.get("/:name", async(req, res) => {
+    console.log(req.query.name)
+     console.log(req.query.age)
+    const result = await db.collection("users").findOne({name:req.params.name});
+    res.json(result);
 });
 app.post("/user", async (req,res)=>{
     try{

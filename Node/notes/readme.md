@@ -246,4 +246,211 @@ console.log("6. End");
 
 ---
 
-👉 Would you like me to also create a **diagram of the Node.js Event Loop phases** so your team can easily visualize how `nextTick`, Promises, and timers are prioritized?
+---
+
+### 📂 Project Structure
+
+```
+my-api/
+│── server.js
+│── config/
+│    └── db.js
+│── models/
+│    └── User.js
+│── routes/
+│    └── userRoutes.js
+│── controllers/
+│    └── userController.js
+│── package.json
+```
+
+---
+
+### 📌 Step 1 – Initialize Project
+
+```bash
+mkdir my-api
+cd my-api
+npm init -y
+npm install express mongoose cors dotenv
+```
+
+---
+
+### 📌 Step 2 – MongoDB Connection (`config/db.js`)
+
+```js
+const mongoose = require("mongoose");
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error("Error connecting MongoDB:", error);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+```
+
+---
+
+### 📌 Step 3 – User Model (`models/User.js`)
+
+```js
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    age: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("User", userSchema);
+```
+
+---
+
+### 📌 Step 4 – User Controller (`controllers/userController.js`)
+
+```js
+const User = require("../models/User");
+
+// @desc Create User
+exports.createUser = async (req, res) => {
+  try {
+    const user = await User.create(req.body);
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+// @desc Get All Users
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// @desc Get Single User
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// @desc Update User
+exports.updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+// @desc Delete User
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+```
+
+---
+
+### 📌 Step 5 – Routes (`routes/userRoutes.js`)
+
+```js
+const express = require("express");
+const router = express.Router();
+const {
+  createUser,
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+} = require("../controllers/userController");
+
+router.post("/", createUser);       // Create
+router.get("/", getUsers);          // Read All
+router.get("/:id", getUserById);    // Read One
+router.put("/:id", updateUser);     // Update
+router.delete("/:id", deleteUser);  // Delete
+
+module.exports = router;
+```
+
+---
+
+### 📌 Step 6 – Main Server File (`server.js`)
+
+```js
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+
+dotenv.config();
+connectDB();
+
+const app = express();
+app.use(express.json());
+
+// Routes
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
+
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+```
+
+---
+
+### 📌 Step 7 – `.env` File
+
+```
+MONGO_URI=mongodb://localhost:27017/mydb
+PORT=5000
+```
+
+---
+
+### 🚀 API Endpoints
+
+* `POST /api/users` → Create User
+* `GET /api/users` → Get All Users
+* `GET /api/users/:id` → Get User by ID
+* `PUT /api/users/:id` → Update User
+* `DELETE /api/users/:id` → Delete User
+
+---
+
+
+
