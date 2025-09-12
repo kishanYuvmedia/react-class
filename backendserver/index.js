@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const express = require('express')
 const app = express()
 const port = 3001
@@ -16,21 +16,43 @@ async function connectDB(){
     }
 }
 connectDB()
-// Simple API Routes
-app.get("/:name", async(req, res) => {
-    console.log(req.query.name)
-     console.log(req.query.age)
-    const result = await db.collection("users").findOne({name:req.params.name});
-    res.json(result);
-});
-app.post("/user", async (req,res)=>{
-    try{
-        const result = await db.collection("users").insertOne(req.body);
-        res.json({ message: "User added", id: result });
-    }catch(error){
-         res.status(500).json({ error: error.message });
-    }
+
+app.get('/api/user',function(req,res){
+    res.send("Simple User get api")
 })
+app.get('/api/user/:id/:name/:age',function(req,res){
+    //https://localhost/3000/api/user/1000/raj/20
+    console.log(req.params.name)
+    console.log(req.params.id)
+    console.log(req.params.age)
+    res.send("Simple User get with param api")
+})
+app.get('/api/user/query',function(req,res){
+    // example
+    // https://localhost/3000/api/user?name='raj'&age=40
+    console.log(req.query)
+      res.send("Simple User get with param api")
+})
+
+
+app.get('/api/user/:name',function(req,res){
+    // https://localhost/3000/api/user/10001
+    console.log(req.params.id)
+     res.send("Simple User get with param api")
+})
+
+app.post('/api/user/create',function(req,res){
+    console.log(req.body)
+     res.send("Simple User get with param api")
+})
+
+app.post('/api/user/update/:id',function(req,res){
+    const id=new ObjectId(req.params.id)
+    console.log(req.params.id)
+    console.log(req.body)
+     res.send("Simple User get with param api")
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
