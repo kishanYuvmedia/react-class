@@ -1,0 +1,28 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+reactlearning/node_modules
+Node-expressjs/backend/node_modules
+Node-expressjs/productionserver/node_modules
+Node-expressjs/server-with-mongoDb/node_modules
+Node-expressjs/server-With-Mongose/node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
