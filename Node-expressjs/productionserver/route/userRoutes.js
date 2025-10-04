@@ -5,5 +5,8 @@ const viewController=require('../controller/viewController')
 rounter.post('/user/create',userController.createUser)
 rounter.post('/user/update/:id',userController.UpdateUser)
 rounter.get('/user/delete/:id',userController.deleteUser)
+rounter.post('/vendor/user/create',userController.createUser)
+rounter.post('/vendor/user/update/:id',userController.UpdateUser)
+rounter.get('/vendor/user/delete/:id',userController.deleteUser)
 rounter.get('/post',viewController.GetPostData)
 module.exports=rounter;

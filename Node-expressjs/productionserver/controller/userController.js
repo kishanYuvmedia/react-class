@@ -27,3 +27,11 @@ exports.deleteUser= async (req,res)=>{
         console.log(e)
     }
 }
+exports.FindUser= async (req,res)=>{
+    try{
+        const user=await User.find({city:'Ajmer'})
+        res.json(user)
+    } catch(e){
+        console.log(e)
+    }
+}
