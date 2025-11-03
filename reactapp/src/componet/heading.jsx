@@ -1,6 +1,6 @@
 const Heading=(props)=>{
     return(
-        <>
+        <div>
         {props.type==='h1' &&
           <h1>{props.children}</h1>
         }
@@ -16,7 +16,7 @@ const Heading=(props)=>{
          {props.type==='h5' &&
           <h5>{props.children}</h5>
         }
-        </>
+        </div>
     )
 }
 export default Heading
